@@ -24,7 +24,7 @@ app.set('view engine', 'html');
 app.engine('html', consolidate.handlebars); // Use handlebars to parse templates when we do res.render
 
 // connect to Database
-const db = 'mongodb://localhost:27017/uberForX';
+const db = 'mongodb://mongodbuber:27017/uberForX';
 mongoose.connect(db).then(value => {
     // Successful connection
     console.log(value.models);

@@ -1,0 +1,30 @@
+version: "3"
+services:
+  app:
+    container_name: uber-app-clone
+    restart: always
+    build: ./
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - mongodbuber
+    links:
+      - mongodbuber
+  mongodbuber:
+    container_name: mongodbuber
+    image: mongo
+    ports:
+      - "27017:27017" 
+  mongo-seed:
+    image: mongo
+    links:
+      - mongodbuber
+    depends_on:
+      - app
+    volumes:
+      - /Users/doyomay/Project/shit-projects/how-to-build-your-own-uber-for-x-app/db:/db
+    command:
+      'bash -c "mongoimport --uri \"mongodb://mongodbuber:27017/uberForX\" --collection cops --drop --file /db/cops.json && mongoimport --uri \"mongodb://mongodbuber:27017/uberForX\" --collection requests --drop --file /db/crime-data.json"'
+    
